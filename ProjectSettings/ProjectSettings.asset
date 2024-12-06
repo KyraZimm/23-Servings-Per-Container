@@ -820,7 +820,7 @@ PlayerSettings:
   m_RenderingPath: 1
   m_MobileRenderingPath: 1
   metroPackageName: 23-Servings-Per-Container
-  metroPackageVersion: 
+  metroPackageVersion: 1.0.0.0
   metroCertificatePath: 
   metroCertificatePassword: 
   metroCertificateSubject: 
@@ -828,7 +828,7 @@ PlayerSettings:
   metroCertificateNotAfter: 0000000000000000
   metroApplicationDescription: 23-Servings-Per-Container
   wsaImages: {}
-  metroTileShortName: 
+  metroTileShortName: 23-Servings-Per-Container
   metroTileShowName: 0
   metroMediumTileShowName: 0
   metroLargeTileShowName: 0
