@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting.FullSerializer;
 using UnityEngine;
 using UnityEngine.Audio;
 
@@ -29,9 +28,9 @@ public static class AudioManager
     public static void Update() {
 
         //check running audio sources to see if clips are done playing. return to pool when completed
-        for (int i = 0; i < m_activeSources.Count; i++) {
+        for (int i = m_activeSources.Count-1; i >= 0; i--) {
             if (Time.time - m_activeSources[i].TimeClipStarted >= m_activeSources[i].ClipLength) {
-                //ReturnSourceToPool(m_activeSources[i].PlayingSource);
+                ReturnSourceToPool(m_activeSources[i].PlayingSource);
                 m_activeSources.RemoveAt(i);
             }
         }
