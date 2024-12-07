@@ -4,15 +4,34 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    public static Player Instance { get; private set; }
+
     [Header("Settings")]
     [SerializeField] private float walkSpeed;
     [SerializeField] private float jumpForce;
+    [SerializeField] float maxHealth;
     [Header("Component Refs")]
     [SerializeField] private Rigidbody2D rb;
 
     //physics vars
     private Vector2 velocity = Vector2.zero;
     private bool jumped = false;
+
+    public float CurrHealth { get; private set; }
+    public float MaxHealth { get { return maxHealth; } }
+
+    private void Awake() {
+
+        //singleton initialization
+        if (Instance != null) {
+            Debug.LogWarning($"A later instance of {nameof(Player)} on {gameObject.name} was destroyed to keep an earlier instance on {Instance.gameObject.name}.");
+            DestroyImmediate(this);
+            return;
+        }
+        Instance = this;
+
+        CurrHealth = maxHealth;
+    }
 
     private void Update() {
         UpdateMovement();
@@ -34,5 +53,9 @@ public class Player : MonoBehaviour
         if (col.gameObject.CompareTag("Floor")) jumped = false;
     }
 
+    public void TakeDamager(float damage) {
+        CurrHealth -= damage;
+        if (CurrHealth <= 0) Debug.Log("Player died!");
+    }
 
 }
