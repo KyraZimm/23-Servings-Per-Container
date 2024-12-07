@@ -17,8 +17,8 @@ public class Player : MonoBehaviour
     private Vector2 velocity = Vector2.zero;
     private bool jumped = false;
 
-    public float CurrHealth { get; private set; }
-    public float MaxHealth { get { return maxHealth; } }
+    public static float CurrHealth { get; private set; }
+    public static float MaxHealth { get { return Instance.maxHealth; } }
 
     private void Awake() {
 
@@ -53,7 +53,7 @@ public class Player : MonoBehaviour
         if (col.gameObject.CompareTag("Floor")) jumped = false;
     }
 
-    public void TakeDamager(float damage) {
+    public static void TakeDamage(float damage) {
         CurrHealth -= damage;
         if (CurrHealth <= 0) Debug.Log("Player died!");
     }

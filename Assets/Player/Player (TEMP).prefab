@@ -173,4 +173,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   walkSpeed: 8
   jumpForce: 10
+  maxHealth: 50
   rb: {fileID: 2330948867313272557}
