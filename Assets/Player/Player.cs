@@ -12,6 +12,7 @@ public class Player : MonoBehaviour
     [SerializeField] float maxHealth;
     [Header("Component Refs")]
     [SerializeField] private Rigidbody2D rb;
+    [SerializeField] float throwRechargeTime;
 
     //physics vars
     private Vector2 velocity = Vector2.zero;
@@ -19,6 +20,8 @@ public class Player : MonoBehaviour
 
     public static float CurrHealth { get; private set; }
     public static float MaxHealth { get { return Instance.maxHealth; } }
+
+    private float nextThrowTime = 0f;
 
     private void Awake() {
 
@@ -59,7 +62,7 @@ public class Player : MonoBehaviour
 
     private void UpdateNeedle()
     {
-        if (Input.GetMouseButtonDown(0)) // 0 for left mouse button
+        if (Input.GetMouseButtonDown(0) && Time.time >= nextThrowTime) // 0 for left mouse button
         {
             // Get the mouse position in world space
             Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -85,11 +88,25 @@ public class Player : MonoBehaviour
             {
                 rb.velocity = shootDirection * shootForce;
             }
+            nextThrowTime = Time.time + throwRechargeTime;
         }
     }
 
     private void OnCollisionEnter2D(Collision2D col) {
         if (col.gameObject.CompareTag("Floor")) jumped = false;
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        // Check if the player touches a spear
+        if (other.CompareTag("Needle"))
+        {
+            // Destroy the spear if the recharge time has passed
+            if (Time.time >= nextThrowTime)
+            {
+                Destroy(other.gameObject);
+            }
+        }
     }
 
     public static void TakeDamage(float damage) {
