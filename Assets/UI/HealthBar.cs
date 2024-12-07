@@ -4,9 +4,19 @@ using UnityEngine;
 using UnityEngine.UI;
 public class HealthBar : MonoBehaviour
 {
+    public enum HealthEntityType { Player, Enemy }
+
+    [SerializeField] HealthEntityType healthEntity;
     [SerializeField] Slider slider;
 
     private void Update() {
-        slider.value = Player.CurrHealth / Player.MaxHealth;
+        switch (healthEntity) {
+            case HealthEntityType.Player:
+                slider.value = Player.CurrHealth / Player.MaxHealth;
+                break;
+            case HealthEntityType.Enemy:
+                slider.value = EnemyPrototype_V1.CurrHealth / EnemyPrototype_V1.MaxHealth;
+                break;
+        }
     }
 }
