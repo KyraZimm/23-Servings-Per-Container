@@ -62,7 +62,7 @@ public class Player : MonoBehaviour
 
     private void UpdateNeedle()
     {
-        if (Input.GetMouseButtonDown(0) && Time.time >= nextThrowTime) // 0 for left mouse button
+        if (Input.GetMouseButtonDown(0) && hasNeedle && Time.time >= nextThrowTime) // 0 for left mouse button
         {
             // Get the mouse position in world space
             Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -89,6 +89,7 @@ public class Player : MonoBehaviour
                 rb.velocity = shootDirection * shootForce;
             }
             nextThrowTime = Time.time + throwRechargeTime;
+            hasNeedle = false;
         }
     }
 
@@ -105,6 +106,7 @@ public class Player : MonoBehaviour
             if (Time.time >= nextThrowTime)
             {
                 Destroy(other.gameObject);
+                hasNeedle = true;
             }
         }
     }
