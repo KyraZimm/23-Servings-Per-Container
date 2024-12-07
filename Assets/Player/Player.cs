@@ -35,7 +35,15 @@ public class Player : MonoBehaviour
 
     private void Update() {
         UpdateMovement();
+        UpdateNeedle();
     }
+
+    [SerializeField] public GameObject needlePrefab;
+
+    [SerializeField] public float shootForce;
+
+    // Boolean (or some other structure) for tracking whether or not the player has a needle
+    [SerializeField] public bool hasNeedle;
     
     private void UpdateMovement() {
         velocity = rb.velocity;
@@ -46,6 +54,37 @@ public class Player : MonoBehaviour
         if (!jumped && Input.GetButtonDown("Jump")) {
             rb.AddForce(jumpForce * Vector2.up, ForceMode2D.Impulse);
             jumped = true;
+        }
+    }
+
+    private void UpdateNeedle()
+    {
+        if (Input.GetMouseButtonDown(0)) // 0 for left mouse button
+        {
+            // Get the mouse position in world space
+            Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            mousePosition.z = 0; // Ensure it's on the same 2D plane as the player
+
+            // Calculate direction from player to mouse
+            Vector2 shootDirection = (mousePosition - transform.position).normalized;
+
+            // Offset the instantiation location to be outside the player collider
+            float spawnDistance = 1.0f; // Adjust based on your player's collider size
+            Vector3 instantiationLocation = transform.position + (Vector3)(shootDirection * spawnDistance);
+
+            // Calculate the rotation for the needle
+            float angle = Mathf.Atan2(shootDirection.y, shootDirection.x) * Mathf.Rad2Deg + 270;
+            Quaternion rotation = Quaternion.Euler(0, 0, angle);
+
+            // Instantiate the needle
+            GameObject needle = Instantiate(needlePrefab, instantiationLocation, rotation);
+
+            // Apply velocity to the needle
+            Rigidbody2D rb = needle.GetComponent<Rigidbody2D>();
+            if (rb != null)
+            {
+                rb.velocity = shootDirection * shootForce;
+            }
         }
     }
 
