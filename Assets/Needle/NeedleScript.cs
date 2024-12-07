@@ -5,20 +5,21 @@ using UnityEngine;
 
 public class NeedleScript : MonoBehaviour
 {
+    [SerializeField] float damage;
+
+    public float Damage { get { return damage; } }
 
     private Rigidbody2D rb;
-
     private bool isColliding;
 
-    // Start is called before the first frame update
+    public Vector2 Velocity { get { return rb.velocity; } }
+    public void SetVelocity(Vector2 velocity) { rb.velocity = velocity; }
+
     void Start()
     {
         Rigidbody2D rigidBody = transform.GetComponent<Rigidbody2D>();
-        Debug.Log($"Center of Mass: {rigidBody.centerOfMass}");
-        Debug.Log($"Position: {transform.position}");
         // Set a new center of mass
         rigidBody.centerOfMass = new Vector2(0, 0);
-        Debug.Log($"New Center of Mass: {rigidBody.centerOfMass}");
         rb = GetComponent<Rigidbody2D>();
         isColliding = false;
     }
