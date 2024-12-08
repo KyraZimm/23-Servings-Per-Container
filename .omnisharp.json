@@ -1,0 +1,9 @@
+{
+  "useGlobalMono": "always",
+  "msbuild": {
+    "useBundledOnly": true
+  },
+  "script": {
+    "enableScriptNuGetReferences": true
+  }
+}
