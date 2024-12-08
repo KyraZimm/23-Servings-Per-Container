@@ -434,7 +434,7 @@ GameObject:
   - component: {fileID: 1772666255}
   - component: {fileID: 1772666254}
   - component: {fileID: 1772666253}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Right Wall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -751,7 +751,7 @@ GameObject:
   - component: {fileID: 1871162665}
   - component: {fileID: 1871162664}
   - component: {fileID: 1871162663}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Left Wall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1117,8 +1117,16 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 877509961038081621, guid: 1c4e83e9cac284a7ebec766bc794eeb2, type: 3}
     - target: {fileID: 8182762495138269712, guid: 7ae8cafc6b5204e489803e3691402fa6, type: 3}
+      propertyPath: wallLayer.m_Bits
+      value: 128
+      objectReference: {fileID: 0}
+    - target: {fileID: 8182762495138269712, guid: 7ae8cafc6b5204e489803e3691402fa6, type: 3}
       propertyPath: throwRechargeTime
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8182762495138269712, guid: 7ae8cafc6b5204e489803e3691402fa6, type: 3}
+      propertyPath: groundLayer.m_Bits
+      value: 128
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
