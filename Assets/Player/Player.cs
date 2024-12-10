@@ -20,6 +20,7 @@ public class Player : MonoBehaviour
     [SerializeField] private float decelerationTime = 0.1f;
 
     [Header("Jumping Settings")]
+    // FIXME(lily): Remove jumpForce parameter. Replace with maxJumpHeight, minJumpHeight, and jumpDuration.
     [SerializeField] private float jumpForce = 16f;
     [Tooltip("Time the player can press jump after grounded and still register a jump")]
     [SerializeField] private float coyoteTime = 0.2f;
@@ -28,6 +29,7 @@ public class Player : MonoBehaviour
     [Tooltip("Gravity multiplier for when the player is falling")]
     [SerializeField] private float fallGravityMultiplier = 2f;
     [Tooltip("Gravity multiplier for when the player is ascending, but has released the jump button")]
+    // FIXME(lily): This can probably be identical to the fallGravityMultiplier
     [SerializeField] private float variableHeightJumpGravityMultiplier = 2f;
 
     [Header("Wall Cling Settings")]
