@@ -1,4 +1,3 @@
-using System.Threading;
 using UnityEngine;
 
 public class Player : MonoBehaviour
@@ -20,17 +19,15 @@ public class Player : MonoBehaviour
     [SerializeField] private float decelerationTime = 0.1f;
 
     [Header("Jumping Settings")]
-    // FIXME(lily): Remove jumpForce parameter. Replace with maxJumpHeight, minJumpHeight, and jumpDuration.
-    [SerializeField] private float jumpForce = 16f;
+    [SerializeField] private float maxJumpHeight = 8;
+    [Tooltip("Time to reach the peak of a max-height jump")]
+    [SerializeField] private float jumpDuration = 1.2f;
     [Tooltip("Time the player can press jump after grounded and still register a jump")]
     [SerializeField] private float coyoteTime = 0.2f;
     [Tooltip("Time the player can press jump before grounded and still register a jump")]
     [SerializeField] private float jumpBufferTime = 0.2f;
     [Tooltip("Gravity multiplier for when the player is falling")]
     [SerializeField] private float fallGravityMultiplier = 2f;
-    [Tooltip("Gravity multiplier for when the player is ascending, but has released the jump button")]
-    // FIXME(lily): This can probably be identical to the fallGravityMultiplier
-    [SerializeField] private float variableHeightJumpGravityMultiplier = 2f;
 
     [Header("Wall Cling Settings")]
     [Tooltip("How long to wall cling before sliding")]
@@ -69,8 +66,12 @@ public class Player : MonoBehaviour
     public static Player Instance { get; private set; }
 
     //physics vars
+    private float gravity;
+    private float jumpForce;
+
     private FacingDir currentFacing = FacingDir.Right;
     private float moveDirection;
+    private bool isJumpHeld;
 
     // Ground and wall state tracking
     private bool isGrounded;
@@ -103,15 +104,16 @@ public class Player : MonoBehaviour
         Instance = this;
 
         CurrHealth = maxHealth;
+
+        CalculateJumpPhysics();
     }
 
     private void Update()
     {
         ProcessMoveInput();
+        ProcessJumpInput();
         ProcessGround();
         ProcessWall();
-        ProcessJumpInput();
-
         UpdateNeedle();
     }
 
@@ -119,6 +121,7 @@ public class Player : MonoBehaviour
     {
         DecrementTimers();
         Move();
+        Jump();
         WallCling();
         WallSlide();
         ModifyGravity();
@@ -280,16 +283,17 @@ public class Player : MonoBehaviour
     /// </summary>
     private void ProcessJumpInput()
     {
-        // Jump input
-        if (Input.GetButtonDown("Jump"))
-        {
-            jumpBufferTimer = jumpBufferTime;
-        }
+        isJumpHeld = Input.GetButton("Jump");
+        // GetButtonDown is only active on the first frame it is pressed
+        if (Input.GetButtonDown("Jump")) jumpBufferTimer = jumpBufferTime;
+    }
 
-        if (jumpBufferTimer <= 0)
-        {
-            return;
-        }
+    /// <summary>
+    /// Perform jumps
+    /// </summary>
+    private void Jump()
+    {
+        if (jumpBufferTimer <= 0) return;
 
         // Ground jump
         if (coyoteTimeTimer > 0)
@@ -301,6 +305,7 @@ public class Player : MonoBehaviour
         {
             PerformWallJump();
         }
+
     }
 
     /// <summary>
@@ -308,7 +313,7 @@ public class Player : MonoBehaviour
     /// </summary>
     private void PerformJump()
     {
-        rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+        rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
         jumpBufferTimer = 0f;
         coyoteTimeTimer = 0f;
     }
@@ -377,20 +382,13 @@ public class Player : MonoBehaviour
             // Reduced gravity while wall sliding
             gravModifier = wallSlideGravityMultiplier;
         }
-        else if (rb.velocity.y < 0)
+        else if (rb.velocity.y < 0 || (rb.velocity.y > 0 && !isJumpHeld))
         {
-            // Increased gravity while falling
+            // Increased gravity while falling or player released the jump button
             gravModifier = fallGravityMultiplier;
         }
-        else if (rb.velocity.y > 0 && !Input.GetButton("Jump"))
-        {
-            // Increased gravity when ascending without holding jump
-            // FIXME(lily): The player can spam jump and toggle the gravity on them while ascending.
-            // Once the player lets go of jump the increased gravity should kick in until they land 
-            gravModifier = fallGravityMultiplier * variableHeightJumpGravityMultiplier;
-        }
 
-        rb.velocity += Vector2.up * Physics2D.gravity.y * (gravModifier - 1) * Time.deltaTime;
+        rb.velocity += Vector2.up * gravity * (gravModifier - 1) * Time.deltaTime;
     }
 
     /// <summary>
@@ -421,6 +419,23 @@ public class Player : MonoBehaviour
         if (isWallJumping) wallJumpTimer -= Time.fixedDeltaTime;
     }
 
+    private void CalculateJumpPhysics()
+    {
+        if (rb == null) return;
+        if (jumpDuration <= 0) return;
+
+        // Calculate required gravity for desired arc
+        gravity = (-2f * maxJumpHeight) / (jumpDuration * jumpDuration);
+
+        // Calculate initial velocity needed
+        float requiredVelocity = Mathf.Sqrt(-2f * gravity * maxJumpHeight);
+
+        // Convert to impulse force (F = mv)
+        jumpForce = requiredVelocity * rb.mass;
+
+        // Set gravity scale
+        rb.gravityScale = gravity / Physics2D.gravity.y;
+    }
 
     /// <summary>
     /// Visualize ground and wall check
@@ -488,6 +503,11 @@ public class Player : MonoBehaviour
                 hasNeedle = true;
             }
         }
+    }
+
+    private void OnValidate()
+    {
+        CalculateJumpPhysics();
     }
 
     public static void TakeDamage(float damage)
