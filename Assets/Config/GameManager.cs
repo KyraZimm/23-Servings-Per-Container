@@ -1,12 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
 
     [SerializeField] private ConfigFile config;
+    [SerializeField] private float startZoneLeftBound;
+    [SerializeField] private float startZoneRightBound;
+    [SerializeField] private AudioClip popGoesTheWeasel;
+
+    private bool tutorialMode = true;
 
     private void Awake() {
         //singleton initializtion
@@ -26,5 +32,21 @@ public class GameManager : MonoBehaviour
 
     private void Update() {
         AudioManager.Update();
+        if (tutorialMode) {
+            CheckForTutorialEnd();
+        }
+    }
+
+    private void CheckForTutorialEnd() {
+        float playerX = Player.Instance.transform.position.x;
+        float playerY = Player.Instance.transform.position.y;
+        if (playerX > startZoneRightBound || playerY < startZoneLeftBound){
+            EndTutorial();
+
+        }
+    }
+
+    private void EndTutorial(){
+        AudioManager.PlaySFX(popGoesTheWeasel);
     }
 }

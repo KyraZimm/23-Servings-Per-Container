@@ -91,6 +91,7 @@ public class Player : MonoBehaviour
     public static float MaxHealth { get { return Instance.maxHealth; } }
 
     private float nextThrowTime = 0f;
+    private bool combatBegun = false;
 
     private void Awake()
     {
