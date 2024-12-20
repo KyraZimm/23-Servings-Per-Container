@@ -1,18 +1,17 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class triggerZone : MonoBehaviour
+public class SoundTriggerZone : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    [SerializeField] private AudioSource audioSource;
+    private bool hasPlayed = false;
 
-    // Update is called once per frame
-    void Update()
+    private void OnTriggerEnter(Collider other)
     {
-        
+        // Check if it's the player and sound hasn't played yet
+        if (other.CompareTag("Player") && !hasPlayed)
+        {
+            audioSource.Play();
+            hasPlayed = true;
+        }
     }
 }
