@@ -41,8 +41,8 @@ public class GameManager : MonoBehaviour
         float playerX = Player.Instance.transform.position.x;
         float playerY = Player.Instance.transform.position.y;
         if (playerX > startZoneRightBound || playerY < startZoneLeftBound){
+            tutorialMode = false;
             EndTutorial();
-
         }
     }
 
