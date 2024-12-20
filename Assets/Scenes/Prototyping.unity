@@ -227,6 +227,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 08b535a8b00dc4ccdaf306ea42b8d27b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cam: {fileID: 519420031}
+  followTarget: 1
+  stationaryPos: {x: 0, y: 7, z: -10}
+  stationarySize: 11
+  followSize: 5
   target: {fileID: 1996044150}
   offset: {x: 0, y: 0, z: -1}
   smoothSpeed: 12
