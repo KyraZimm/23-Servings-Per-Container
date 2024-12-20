@@ -135,7 +135,7 @@ Rigidbody2D:
   m_Mass: 2
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 1.1326311
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -208,14 +208,17 @@ MonoBehaviour:
   moveSpeed: 12
   accelerationTime: 0.1
   decelerationTime: 0.1
-  jumpForce: 10
+  maxJumpHeight: 8
+  jumpDuration: 1.2
   coyoteTime: 0.2
   jumpBufferTime: 0.2
-  gravityMultiplier: 2.5
-  wallSlideSpeed: 2
+  fallGravityMultiplier: 2
+  wallClingTime: 0.2
+  maxWallSlideSpeed: 10
+  wallSlideGravityMultiplier: 0.2
   wallJumpForce: 15
   wallJumpAngle: {x: 1, y: 2}
-  wallJumpTime: 0.2
+  wallJumpCooldown: 0.2
   groundCheck: {fileID: 5324137671544140868}
   groundCheckRadius: 0.2
   groundLayer:
