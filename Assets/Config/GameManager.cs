@@ -47,6 +47,11 @@ public class GameManager : MonoBehaviour
     }
 
     private void EndTutorial(){
+        Camera mainCamera = Camera.main;
+        if (mainCamera == null) {
+            Debug.Log("Fuck");
+        }
+        mainCamera.orthographicSize *= 2;
         AudioManager.PlaySFX(popGoesTheWeasel);
     }
 }
