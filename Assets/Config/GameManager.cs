@@ -47,11 +47,11 @@ public class GameManager : MonoBehaviour
     }
 
     private void EndTutorial(){
-        Camera mainCamera = Camera.main;
+        CameraFollow mainCamera = Camera.main.GetComponent<CameraFollow>();
         if (mainCamera == null) {
             Debug.Log("Fuck");
         }
-        mainCamera.orthographicSize *= 2;
+        mainCamera.SetToStationary(true);
         AudioManager.PlaySFX(popGoesTheWeasel);
     }
 }
