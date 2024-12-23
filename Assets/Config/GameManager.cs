@@ -14,6 +14,7 @@ public class GameManager : MonoBehaviour
 
     private bool tutorialMode = true;
     private GameObject terrainRoot;
+    private GameObject playerRoot;
 
     private void Awake() {
         //singleton initializtion
@@ -30,8 +31,12 @@ public class GameManager : MonoBehaviour
         //initialize static classes using current config file
         AudioManager.Init(config);
 
-        //init terrain
+        //init necessary prefabs
         terrainRoot = GameObject.Instantiate(config.Settings.TerrainPrefab, Vector3.zero, Quaternion.identity);
+        playerRoot = GameObject.Instantiate(config.Settings.PlayerPrefab, config.Settings.PlayerSpawn, Quaternion.identity);
+
+        CameraFollow cam = Camera.main.GetComponent<CameraFollow>();
+        cam.SetTarget(playerRoot.transform);
     }
 
     private void Update() {

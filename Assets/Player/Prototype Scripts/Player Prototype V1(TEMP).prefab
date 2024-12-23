@@ -43,9 +43,9 @@ GameObject:
   - component: {fileID: 2811146444955851597}
   - component: {fileID: 2330948867313272557}
   - component: {fileID: 2838748028275449240}
-  - component: {fileID: 8182762495138269712}
+  - component: {fileID: 3555248599112913620}
   m_Layer: 0
-  m_Name: Player (TEMP)
+  m_Name: Player Prototype V1(TEMP)
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -61,7 +61,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.65819377, y: 0.2781, z: 0}
-  m_LocalScale: {x: 1, y: 2.0751, z: 1}
+  m_LocalScale: {x: 2, y: 3, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5324137671544140868}
@@ -135,7 +135,7 @@ Rigidbody2D:
   m_Mass: 2
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 1.1326311
+  m_GravityScale: 6.523955
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -192,7 +192,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!114 &8182762495138269712
+--- !u!114 &3555248599112913620
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -201,15 +201,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 6577580205221264501}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b73592a92493b9c408f3de97bddc3af9, type: 3}
+  m_Script: {fileID: 11500000, guid: 02ebb515223274f48a099f1b0dc37ca6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   rb: {fileID: 2330948867313272557}
+  animator: {fileID: 0}
+  sr: {fileID: 2811146444955851597}
   moveSpeed: 12
   accelerationTime: 0.1
   decelerationTime: 0.1
   maxJumpHeight: 8
-  jumpDuration: 1.2
+  jumpDuration: 0.5
   coyoteTime: 0.2
   jumpBufferTime: 0.2
   fallGravityMultiplier: 2
@@ -220,19 +222,19 @@ MonoBehaviour:
   wallJumpAngle: {x: 1, y: 2}
   wallJumpCooldown: 0.2
   groundCheck: {fileID: 5324137671544140868}
-  groundCheckRadius: 0.2
+  groundCheckRadius: 0.1
   groundLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 128
   wallCheck: {fileID: 6717896161630799360}
   wallCheckDistance: 0.1
   wallLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 128
   maxHealth: 50
-  needlePrefab: {fileID: 0}
-  throwRechargeTime: 0
-  shootForce: 0
+  needlePrefab: {fileID: 877509961038081621, guid: 1c4e83e9cac284a7ebec766bc794eeb2, type: 3}
+  throwRechargeTime: 0.5
+  shootForce: 15
   hasNeedle: 0
 --- !u!1 &8410144517934041417
 GameObject:

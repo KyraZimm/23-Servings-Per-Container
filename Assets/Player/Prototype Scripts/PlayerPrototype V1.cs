@@ -95,12 +95,6 @@ public class PlayerPrototypeV1 : MonoBehaviour
     private float nextThrowTime = 0f;
 
     private void Awake() {
-        //singleton initialization
-       /* if (Instance != null) {
-            Debug.LogWarning($"A later instance of {nameof(CheckIsGrounded)} on {gameObject.name} was destroyed to keep an earlier instance on {Instance.gameObject.name}.");
-            DestroyImmediate(this);
-            return;
-        }*/
 
         MaxHealth = maxHealth;
         CurrHealth = maxHealth;

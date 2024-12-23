@@ -12,4 +12,6 @@ public class Config
     public AudioMixerGroup SFXMixerGroup;
     [Header("Prefab Data")]
     public GameObject TerrainPrefab;
+    public GameObject PlayerPrefab;
+    public Vector2 PlayerSpawn;
 }
