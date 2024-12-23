@@ -16,3 +16,4 @@ MonoBehaviour:
     DefaultAudioSourcePoolSize: 10
     MusicMixerGroup: {fileID: 2184009651358564131, guid: 9d1a66e8b3ffe7344907548e93f42d3e, type: 2}
     SFXMixerGroup: {fileID: -3485468011379667997, guid: 9d1a66e8b3ffe7344907548e93f42d3e, type: 2}
+    TerrainPrefab: {fileID: 2629469021371336957, guid: 59223b9c62632094eae17a84bb9dcca8, type: 3}

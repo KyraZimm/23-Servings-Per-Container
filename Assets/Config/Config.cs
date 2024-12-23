@@ -10,4 +10,6 @@ public class Config
     public int DefaultAudioSourcePoolSize;
     public AudioMixerGroup MusicMixerGroup;
     public AudioMixerGroup SFXMixerGroup;
+    [Header("Prefab Data")]
+    public GameObject TerrainPrefab;
 }
