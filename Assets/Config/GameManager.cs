@@ -35,15 +35,22 @@ public class GameManager : MonoBehaviour
         terrainRoot = GameObject.Instantiate(config.Settings.TerrainPrefab, Vector3.zero, Quaternion.identity);
         playerRoot = GameObject.Instantiate(config.Settings.PlayerPrefab, config.Settings.PlayerSpawn, Quaternion.identity);
 
+        //init player on reliant scripts
+        //NOTE: once player mechanics are settled, this will prob be resolved by having a universal static ref for the player
         CameraFollow cam = Camera.main.GetComponent<CameraFollow>();
         cam.SetTarget(playerRoot.transform);
+
+        thwomp[] thwomps = GameObject.FindObjectsOfType<thwomp>();
+        foreach (thwomp t in thwomps) t.SetPlayer(playerRoot.transform);
     }
 
     private void Update() {
         AudioManager.Update();
-        if (tutorialMode) {
+
+        //disabled during prototyping phase. re-enable during dev phase
+        /*if (tutorialMode) {
             CheckForTutorialEnd();
-        }
+        }*/
     }
 
     private void CheckForTutorialEnd() {

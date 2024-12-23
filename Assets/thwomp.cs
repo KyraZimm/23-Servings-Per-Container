@@ -35,6 +35,8 @@ public class thwomp : MonoBehaviour
         }
     }
 
+    public void SetPlayer(Transform player){ this.player = player; }
+
     private void TrackPlayer()
     {
         float distanceToPlayer = Mathf.Abs(transform.position.x - player.position.x);
