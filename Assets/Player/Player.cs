@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Animations;
 
 public class Player : MonoBehaviour
 {
@@ -10,6 +11,7 @@ public class Player : MonoBehaviour
 
     [Header("Component Refs")]
     [SerializeField] private Rigidbody2D rb;
+    [SerializeField] private AnimatorController animator;
 
     [Header("Movement Settings")]
     [SerializeField] private float moveSpeed = 12f;
