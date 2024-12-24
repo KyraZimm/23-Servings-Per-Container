@@ -13,9 +13,11 @@ public class GameManager : MonoBehaviour
     private GameObject terrainRoot;
     private GameObject playerRoot;
 
-    private void Awake() {
+    private void Awake()
+    {
         //singleton initializtion
-        if (Instance != null){
+        if (Instance != null)
+        {
             Debug.LogWarning($"A later instance of {nameof(GameManager)} on {gameObject.name} was destroyed to preserve an earlier instance on {Instance.gameObject.name}.");
             DestroyImmediate(this);
             return;
@@ -23,7 +25,8 @@ public class GameManager : MonoBehaviour
         Instance = this;
     }
 
-    private void Start() {
+    private void Start()
+    {
 
         //initialize static classes using current config file
         AudioManager.Init(config);
@@ -38,10 +41,11 @@ public class GameManager : MonoBehaviour
         cam.SetTarget(playerRoot.transform);
 
         thwomp[] thwomps = GameObject.FindObjectsOfType<thwomp>();
-        foreach (thwomp t in thwomps) t.SetPlayer(playerRoot.transform);
+        foreach (thwomp t in thwomps) t.SetPlayer(playerRoot);
     }
 
-    private void Update() {
+    private void Update()
+    {
         AudioManager.Update();
 
         //disabled during prototyping phase. re-enable during dev phase
@@ -50,18 +54,22 @@ public class GameManager : MonoBehaviour
         }*/
     }
 
-    private void CheckForTutorialEnd() {
+    private void CheckForTutorialEnd()
+    {
         float playerX = Player.Instance.transform.position.x;
         float playerY = Player.Instance.transform.position.y;
-        if (playerX > startZoneRightBound || playerY < startZoneLeftBound){
+        if (playerX > startZoneRightBound || playerY < startZoneLeftBound)
+        {
             tutorialMode = false;
             EndTutorial();
         }
     }
 
-    private void EndTutorial(){
+    private void EndTutorial()
+    {
         CameraFollow mainCamera = Camera.main.GetComponent<CameraFollow>();
-        if (mainCamera == null) {
+        if (mainCamera == null)
+        {
             Debug.Log("Fuck");
         }
         mainCamera.SetToStationary(true);

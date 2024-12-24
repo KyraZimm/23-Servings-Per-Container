@@ -4,6 +4,7 @@ using UnityEngine;
 public class thwomp : MonoBehaviour
 {
     [Header("Movement Settings")]
+    [SerializeField] private float damage = 5f;
     [SerializeField] private float horizontalSpeed = 5f;
     [SerializeField] private float verticalSpeed = 15f;
     [SerializeField] private float detectionRange = 10f;
@@ -13,12 +14,13 @@ public class thwomp : MonoBehaviour
     [SerializeField] private float groundPauseTime = 1f;
 
     [Header("References")]
-    [SerializeField] private Transform player;
+    [SerializeField] private GameObject player;
     [SerializeField] private LayerMask groundLayer;
 
     // State variables
     private Vector2 initialPosition;
-    private bool isTracking = true;
+    private bool isIdle = true;
+    private bool isTracking = false;
     private bool isSlamming = false;
 
     void Start()
@@ -29,29 +31,71 @@ public class thwomp : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (isTracking)
+        if (isIdle)
+        {
+            Idle();
+        }
+        else if (isTracking)
         {
             TrackPlayer();
         }
     }
 
-    public void SetPlayer(Transform player){ this.player = player; }
+    void OnCollisionEnter(Collision2D col)
+    {
+        if (col.gameObject.tag == "Player")
+        {
+            Player.TakeDamage(damage);
+        }
+    }
 
+    public void SetPlayer(GameObject player) { this.player = player; }
+
+    // Return to default position
+    private void Idle()
+    {
+        float distanceToPlayer = Mathf.Abs(transform.position.x - player.transform.position.x);
+        bool playerAboveThwomp = player.transform.position.y > transform.position.y;
+        if (distanceToPlayer < detectionRange && !playerAboveThwomp)
+        {
+            isIdle = false;
+            isTracking = true;
+            return;
+        }
+
+        // Move to start height
+        if (transform.position.y != initialPosition.y)
+        {
+            transform.position = Vector2.MoveTowards(transform.position,
+                                                     new Vector2(transform.position.x, initialPosition.y),
+                                                     verticalSpeed * 0.5f * Time.deltaTime);
+        }
+        // Move towards start position horizontally
+        else if (transform.position.x != initialPosition.x)
+        {
+            transform.position = Vector2.MoveTowards(transform.position,
+                                                     new Vector2(initialPosition.x, initialPosition.y),
+                                                     horizontalSpeed * 0.5f * Time.deltaTime);
+        }
+    }
+
+    // Follow player
     private void TrackPlayer()
     {
-        float distanceToPlayer = Mathf.Abs(transform.position.x - player.position.x);
+        float distanceToPlayer = Mathf.Abs(transform.position.x - player.transform.position.x);
         if (distanceToPlayer <= detectionRange)
         {
             // Move towards player horizontally
             float targetX = Mathf.MoveTowards(transform.position.x,
-                                            player.position.x,
+                                            player.transform.position.x,
                                             horizontalSpeed * Time.deltaTime);
 
             transform.position = new Vector2(targetX,
                                            initialPosition.y);
 
             // Check if we're above the player
-            if (Mathf.Abs(transform.position.x - player.position.x) < aboveRange)
+            if (Mathf.Abs(transform.position.x - player.transform.position.x) < aboveRange &&
+                transform.position.y > player.transform.position.y)
             {
                 StartCoroutine(SlamAttack());
             }
@@ -61,6 +105,7 @@ public class thwomp : MonoBehaviour
     private IEnumerator SlamAttack()
     {
         isTracking = false;
+        isIdle = false;
         isSlamming = true;
 
         // Pause before slamming
@@ -103,7 +148,7 @@ public class thwomp : MonoBehaviour
             yield return null;
         }
 
-        isTracking = true;
+        isIdle = true;
     }
 
     private void OnDrawGizmos()
@@ -111,4 +156,5 @@ public class thwomp : MonoBehaviour
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(transform.position, detectionRange);
     }
+
 }
