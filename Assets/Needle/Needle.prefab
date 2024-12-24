@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 8705313517409404276}
   - component: {fileID: 1293124001979690620}
   - component: {fileID: 8949454353294503411}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Needle
   m_TagString: Needle
   m_Icon: {fileID: 0}
@@ -76,7 +76,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 3
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
   m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_FlipX: 0
@@ -184,7 +184,7 @@ GameObject:
   - component: {fileID: 889744330665141881}
   - component: {fileID: 3691877186550568202}
   - component: {fileID: 8635017578394532137}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Needle Back
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -246,7 +246,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 3
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
   m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_FlipX: 0

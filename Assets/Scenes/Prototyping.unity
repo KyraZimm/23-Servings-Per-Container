@@ -456,6 +456,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: Needle
       objectReference: {fileID: 0}
+    - target: {fileID: 2217991253862129344, guid: 1c4e83e9cac284a7ebec766bc794eeb2, type: 3}
+      propertyPath: m_SortingLayer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2217991253862129344, guid: 1c4e83e9cac284a7ebec766bc794eeb2, type: 3}
+      propertyPath: m_SortingOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2217991253862129344, guid: 1c4e83e9cac284a7ebec766bc794eeb2, type: 3}
+      propertyPath: m_SortingLayerID
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6015166337278494443, guid: 1c4e83e9cac284a7ebec766bc794eeb2, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.09
@@ -1033,13 +1045,37 @@ PrefabInstance:
       propertyPath: m_Name
       value: Enemy (TEMP)
       objectReference: {fileID: 0}
+    - target: {fileID: 4422627613430484367, guid: 98b43636d5c7926428aeda06da8b0361, type: 3}
+      propertyPath: m_SortingLayer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4422627613430484367, guid: 98b43636d5c7926428aeda06da8b0361, type: 3}
+      propertyPath: m_SortingOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4422627613430484367, guid: 98b43636d5c7926428aeda06da8b0361, type: 3}
+      propertyPath: m_SortingLayerID
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5241153478351663001, guid: 98b43636d5c7926428aeda06da8b0361, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 8.449345
+      objectReference: {fileID: 0}
+    - target: {fileID: 5241153478351663001, guid: 98b43636d5c7926428aeda06da8b0361, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 8.449345
+      objectReference: {fileID: 0}
+    - target: {fileID: 5241153478351663001, guid: 98b43636d5c7926428aeda06da8b0361, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 8.449345
+      objectReference: {fileID: 0}
     - target: {fileID: 5241153478351663001, guid: 98b43636d5c7926428aeda06da8b0361, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.07
+      value: 0.95
       objectReference: {fileID: 0}
     - target: {fileID: 5241153478351663001, guid: 98b43636d5c7926428aeda06da8b0361, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 5.02
+      value: 16.85
       objectReference: {fileID: 0}
     - target: {fileID: 5241153478351663001, guid: 98b43636d5c7926428aeda06da8b0361, type: 3}
       propertyPath: m_LocalPosition.z

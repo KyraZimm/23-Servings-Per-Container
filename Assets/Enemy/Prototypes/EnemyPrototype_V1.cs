@@ -24,7 +24,7 @@ public class EnemyPrototype_V1 : MonoBehaviour
             acceptCollision = Time.time - timeOfLastCollision >= COLLISION_BUFFER_DURATION;
     }
 
-    private void OnTriggerEnter2D(Collider2D col) {
+    public void EyeCollision(Collider2D col) {
         if (col.gameObject.CompareTag("Needle") && acceptCollision) {
             NeedleScript needle = col.GetComponent<NeedleScript>();
 
@@ -53,5 +53,4 @@ public class EnemyPrototype_V1 : MonoBehaviour
         float speed = needle.Velocity.magnitude;
         needle.SetVelocity(reflectedDir * speed);
     }
-
 }
