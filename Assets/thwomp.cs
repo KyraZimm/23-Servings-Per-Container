@@ -41,7 +41,7 @@ public class thwomp : MonoBehaviour
         }
     }
 
-    void OnCollisionEnter(Collision2D col)
+    void OnCollisionEnter2D(Collision2D col)
     {
         if (col.gameObject.tag == "Player")
         {
