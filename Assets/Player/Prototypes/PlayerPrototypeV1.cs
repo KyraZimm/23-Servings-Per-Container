@@ -4,6 +4,13 @@ using UnityEngine;
 
 public class PlayerPrototypeV1 : MonoBehaviour
 {
+    //NOTES:
+    //  A/D on ground to walk left/right
+    //  W to jump
+    //  A/D into wall to cling
+    //  W during wall cling to wall jump
+    //  mouse click for needle
+
     public enum FacingDir {
         Right,
         Left
