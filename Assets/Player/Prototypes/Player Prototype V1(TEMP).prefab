@@ -43,7 +43,7 @@ GameObject:
   - component: {fileID: 2811146444955851597}
   - component: {fileID: 2330948867313272557}
   - component: {fileID: 2838748028275449240}
-  - component: {fileID: 3555248599112913620}
+  - component: {fileID: -6033746805607727568}
   m_Layer: 0
   m_Name: Player Prototype V1(TEMP)
   m_TagString: Player
@@ -192,7 +192,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!114 &3555248599112913620
+--- !u!114 &-6033746805607727568
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -201,12 +201,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 6577580205221264501}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 02ebb515223274f48a099f1b0dc37ca6, type: 3}
+  m_Script: {fileID: 11500000, guid: b73592a92493b9c408f3de97bddc3af9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   rb: {fileID: 2330948867313272557}
-  animator: {fileID: 0}
-  sr: {fileID: 2811146444955851597}
   moveSpeed: 12
   accelerationTime: 0.1
   decelerationTime: 0.1
@@ -231,7 +229,7 @@ MonoBehaviour:
   wallLayer:
     serializedVersion: 2
     m_Bits: 128
-  maxHealth: 50
+  maxHealth: 49.8
   needlePrefab: {fileID: 877509961038081621, guid: 1c4e83e9cac284a7ebec766bc794eeb2, type: 3}
   throwRechargeTime: 0.5
   shootForce: 15

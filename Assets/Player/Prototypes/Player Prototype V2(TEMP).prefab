@@ -74,7 +74,7 @@ GameObject:
   - component: {fileID: 2811146444955851597}
   - component: {fileID: 2330948867313272557}
   - component: {fileID: 2838748028275449240}
-  - component: {fileID: 9094550945292536645}
+  - component: {fileID: 934002246690024405}
   m_Layer: 0
   m_Name: Player Prototype V2(TEMP)
   m_TagString: Player
@@ -167,7 +167,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 6.523955
+  m_GravityScale: 1.1326311
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -224,7 +224,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!114 &9094550945292536645
+--- !u!114 &934002246690024405
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -233,15 +233,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 6577580205221264501}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1024fa555fbd6a6418d5c56cd695af2e, type: 3}
+  m_Script: {fileID: 11500000, guid: b73592a92493b9c408f3de97bddc3af9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   rb: {fileID: 2330948867313272557}
-  sr: {fileID: 2811146444955851597}
   moveSpeed: 12
   accelerationTime: 0.1
   decelerationTime: 0.1
-  jumpForce: 24
+  maxJumpHeight: 8
+  jumpDuration: 1.2
   coyoteTime: 0.2
   jumpBufferTime: 0.2
   fallGravityMultiplier: 2
@@ -251,24 +251,21 @@ MonoBehaviour:
   wallJumpForce: 15
   wallJumpAngle: {x: 1, y: 2}
   wallJumpCooldown: 0.2
-  dashSpeed: 30
-  dashDuration: 0.3
-  dashRefreshDuration: 1
-  groundCheck: {fileID: 5324137671544140868}
+  groundCheck: {fileID: 0}
   groundCheckRadius: 0.1
   groundLayer:
     serializedVersion: 2
-    m_Bits: 128
-  leftWallCheck: {fileID: 3795724364478240128}
-  rightWallCheck: {fileID: 6717896161630799360}
+    m_Bits: 0
+  wallCheck: {fileID: 0}
   wallCheckDistance: 0.1
   wallLayer:
     serializedVersion: 2
-    m_Bits: 128
-  maxHealth: 50
-  needlePrefab: {fileID: 877509961038081621, guid: 1c4e83e9cac284a7ebec766bc794eeb2, type: 3}
-  throwRechargeTime: 0.5
-  shootForce: 15
+    m_Bits: 0
+  maxHealth: 0
+  needlePrefab: {fileID: 0}
+  throwRechargeTime: 0
+  shootForce: 0
+  hasNeedle: 0
 --- !u!1 &8410144517934041417
 GameObject:
   m_ObjectHideFlags: 0
