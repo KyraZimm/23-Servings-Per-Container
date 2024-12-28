@@ -17,5 +17,5 @@ MonoBehaviour:
     MusicMixerGroup: {fileID: 2184009651358564131, guid: 9d1a66e8b3ffe7344907548e93f42d3e, type: 2}
     SFXMixerGroup: {fileID: -3485468011379667997, guid: 9d1a66e8b3ffe7344907548e93f42d3e, type: 2}
     TerrainPrefab: {fileID: 2629469021371336957, guid: acab4974f297bbf4c93a3688fccce850, type: 3}
-    PlayerPrefab: {fileID: 6577580205221264501, guid: 5933f7fd6521f3349bd638513bf1a3aa, type: 3}
+    PlayerPrefab: {fileID: 8118096597801522289, guid: be9a0f6cf88e35c4596330dc2785e775, type: 3}
     PlayerSpawn: {x: -1.52, y: 5.87}

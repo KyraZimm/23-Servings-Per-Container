@@ -1,13 +1,7 @@
 using UnityEngine;
-using UnityEngine.Animations;
 
 public class Player : MonoBehaviour
 {
-    public enum FacingDir
-    {
-        Right,
-        Left
-    }
 
     [Header("Component Refs")]
     [SerializeField] private Rigidbody2D rb;
@@ -51,7 +45,8 @@ public class Player : MonoBehaviour
     [SerializeField] private LayerMask groundLayer;
 
     [Header("Wall Check")]
-    [SerializeField] private Transform wallCheck;
+    [SerializeField] private Transform leftWallCheck;
+    [SerializeField] private Transform rightWallCheck;
     [SerializeField] private float wallCheckDistance = 0.1f;
     [SerializeField] private LayerMask wallLayer;
 
@@ -69,14 +64,15 @@ public class Player : MonoBehaviour
     //physics vars
     private float gravity;
     private float jumpForce;
-
-    private FacingDir currentFacing = FacingDir.Right;
     private float moveDirection;
     private bool isJumpHeld;
+    private RaycastHit2D[] terrainBuffer;
 
     // Ground and wall state tracking
+    private bool isFacingLeft;
     private bool isGrounded;
-    private bool isTouchingWall;
+    private bool isTouchingLeftWall;
+    private bool isTouchingRightWall;
     private bool isWallClinging;
     private bool isWallSliding;
     private bool isWallJumping;
@@ -87,7 +83,6 @@ public class Player : MonoBehaviour
     private float wallClingTimer;
     private float wallJumpTimer;
 
-    //state
     public static float CurrHealth { get; private set; }
     public static float MaxHealth { get { return Instance.maxHealth; } }
 
@@ -105,6 +100,7 @@ public class Player : MonoBehaviour
         Instance = this;
 
         CurrHealth = maxHealth;
+        terrainBuffer = new RaycastHit2D[10]; //using a buffer to reduce GC for floor/wall checks
 
         CalculateJumpPhysics();
     }
@@ -135,14 +131,10 @@ public class Player : MonoBehaviour
     {
         moveDirection = Input.GetAxisRaw("Horizontal");
 
-        if (moveDirection > 0 && currentFacing == FacingDir.Left)
-        {
-            SetFacingDir(FacingDir.Right);
-        }
-        else if (moveDirection < 0 && currentFacing == FacingDir.Right)
-        {
-            SetFacingDir(FacingDir.Left);
-        }
+        if (moveDirection > 0)
+            isFacingLeft = true;
+        else if (moveDirection < 0)
+            isFacingLeft = false;
     }
 
     /// <summary>
@@ -163,12 +155,14 @@ public class Player : MonoBehaviour
     /// </summary>
     private void ProcessWall()
     {
-        isTouchingWall = CheckIsTouchingWall();
+        //isTouchingLeftWall = CheckIsTouchingWall();
+        isTouchingLeftWall = Physics2D.Raycast(leftWallCheck.position, Vector2.left, wallCheckDistance, wallLayer);
+        isTouchingRightWall = Physics2D.Raycast(rightWallCheck.position, Vector2.right, wallCheckDistance, wallLayer);
 
-        bool isHoldingIntoWall = (currentFacing == FacingDir.Right && moveDirection > 0) ||
-                                (currentFacing == FacingDir.Left && moveDirection < 0);
+        bool isHoldingIntoWall = (!isFacingLeft && moveDirection > 0) ||
+                                (isFacingLeft && moveDirection < 0);
 
-        if (isGrounded || !isTouchingWall || !isHoldingIntoWall || wallJumpTimer > 0)
+        if (isGrounded || (!isTouchingLeftWall && !isTouchingRightWall) || !isHoldingIntoWall || wallJumpTimer > 0)
         {
             isWallClinging = false;
             isWallSliding = false;
@@ -196,22 +190,23 @@ public class Player : MonoBehaviour
     private bool CheckIsGrounded()
     {
         // Check against all ground overlaps
-        Collider2D[] hits = Physics2D.OverlapCircleAll(groundCheck.position, groundCheckRadius, groundLayer);
-        if (hits.Length == 0)
-        {
+        int hits = Physics2D.BoxCastNonAlloc(groundCheck.position, new Vector2(transform.localScale.x, 1), 0f, Vector2.zero, terrainBuffer, 1f, groundLayer);
+        if (hits == 0) {
             return false;
         }
 
         Collider2D closestGround = null;
         float minDistance = float.MaxValue;
-        foreach (var hit in hits)
+        foreach (var hit in terrainBuffer)
         {
-            Vector2 closestPoint = hit.ClosestPoint(groundCheck.position);
+            if (!hit) continue;
+
+            Vector2 closestPoint = hit.collider.ClosestPoint(groundCheck.position);
             float dist = (closestPoint - (Vector2)groundCheck.position).sqrMagnitude;
             if (dist < minDistance)
             {
                 minDistance = dist;
-                closestGround = hit;
+                closestGround = hit.collider;
             }
         }
 
@@ -233,14 +228,14 @@ public class Player : MonoBehaviour
         return true;
     }
 
-    /// <summary>
+    /*/// <summary>
     /// Checks if player is touching a wall
     /// </summary>
     private bool CheckIsTouchingWall()
     {
         Vector2 wallCheckDir = currentFacing == FacingDir.Right ? Vector2.right : Vector2.left;
         return Physics2D.Raycast(wallCheck.position, wallCheckDir, wallCheckDistance, wallLayer);
-    }
+    }*/
 
     /// <summary>
     /// Handles player movement with smooth acceleration and deceleration
@@ -324,13 +319,10 @@ public class Player : MonoBehaviour
     /// </summary>
     private void PerformWallJump()
     {
-        // Determine wall jump direction based on facing
-        FacingDir wallJumpDirection = (currentFacing == FacingDir.Right) ? FacingDir.Left : FacingDir.Right;
-
         // Reset velocity and apply wall jump force
         rb.velocity = Vector2.zero;
         rb.AddForce(new Vector2(
-            (wallJumpDirection == FacingDir.Left ? -1 : 1) * wallJumpForce * wallJumpAngle.x,
+            (isFacingLeft ? -1 : 1) * wallJumpForce * wallJumpAngle.x,
             wallJumpForce * wallJumpAngle.y
         ), ForceMode2D.Impulse);
 
@@ -338,8 +330,6 @@ public class Player : MonoBehaviour
         jumpBufferTimer = 0f;
         wallJumpTimer = wallJumpCooldown;
         isWallJumping = true;
-
-        SetFacingDir(wallJumpDirection);
     }
 
     /// <summary>
@@ -393,23 +383,6 @@ public class Player : MonoBehaviour
     }
 
     /// <summary>
-    /// Sets facing direction of the player and flips the sprite
-    /// </summary>
-    private void SetFacingDir(FacingDir newFacing)
-    {
-        // Only flip if facing direction has changed
-        if (currentFacing == newFacing) return;
-
-        // Update current facing direction
-        currentFacing = newFacing;
-
-        // Flip using scale
-        Vector3 localScale = transform.localScale;
-        localScale.x = Mathf.Abs(localScale.x) * (newFacing == FacingDir.Right ? 1 : -1);
-        transform.localScale = localScale;
-    }
-
-    /// <summary>
     /// Decrement all timers
     /// </summary>
     private void DecrementTimers()
@@ -444,18 +417,20 @@ public class Player : MonoBehaviour
     void OnDrawGizmosSelected()
     {
         // Ground check visualization
-        if (groundCheck != null)
+        /*if (groundCheck != null)
         {
             Gizmos.color = Color.green;
             Gizmos.DrawWireSphere(groundCheck.position, groundCheckRadius);
-        }
+        }*/
 
         // Wall check visualization
-        if (wallCheck != null)
-        {
-            Gizmos.color = Color.red;
-            Vector2 wallCheckDir = currentFacing == FacingDir.Right ? Vector2.right : Vector2.right * -1;
-            Gizmos.DrawRay(wallCheck.position, wallCheckDir * wallCheckDistance);
+        Gizmos.color = Color.red;
+        if (leftWallCheck != null) {
+            Gizmos.DrawRay(leftWallCheck.position, Vector2.left * wallCheckDistance);
+        }
+
+        if (rightWallCheck != null) {
+            Gizmos.DrawRay(rightWallCheck.position, Vector2.right * wallCheckDistance);
         }
     }
 

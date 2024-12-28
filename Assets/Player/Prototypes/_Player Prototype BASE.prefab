@@ -31,37 +31,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 6411687457963703758}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &6204954719293927623
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 3795724364478240128}
-  m_Layer: 0
-  m_Name: LeftWallCheck
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &3795724364478240128
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6204954719293927623}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.5, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 6411687457963703758}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6577580205221264501
 GameObject:
   m_ObjectHideFlags: 0
@@ -74,9 +43,9 @@ GameObject:
   - component: {fileID: 2811146444955851597}
   - component: {fileID: 2330948867313272557}
   - component: {fileID: 2838748028275449240}
-  - component: {fileID: 934002246690024405}
+  - component: {fileID: -6033746805607727568}
   m_Layer: 0
-  m_Name: Player Prototype V2(TEMP)
+  m_Name: _Player Prototype BASE
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -92,12 +61,12 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.65819377, y: 0.2781, z: 0}
-  m_LocalScale: {x: 1, y: 1.5, z: 1}
+  m_LocalScale: {x: 2, y: 3, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5324137671544140868}
-  - {fileID: 3795724364478240128}
   - {fileID: 6717896161630799360}
+  - {fileID: 7324848516063290816}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &2811146444955851597
@@ -164,10 +133,10 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 2
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 1.1326311
+  m_GravityScale: 6.523955
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -224,7 +193,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!114 &934002246690024405
+--- !u!114 &-6033746805607727568
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -241,7 +210,7 @@ MonoBehaviour:
   accelerationTime: 0.1
   decelerationTime: 0.1
   maxJumpHeight: 8
-  jumpDuration: 1.2
+  jumpDuration: 0.5
   coyoteTime: 0.2
   jumpBufferTime: 0.2
   fallGravityMultiplier: 2
@@ -251,20 +220,21 @@ MonoBehaviour:
   wallJumpForce: 15
   wallJumpAngle: {x: 1, y: 2}
   wallJumpCooldown: 0.2
-  groundCheck: {fileID: 0}
+  groundCheck: {fileID: 5324137671544140868}
   groundCheckRadius: 0.1
   groundLayer:
     serializedVersion: 2
-    m_Bits: 0
-  wallCheck: {fileID: 0}
+    m_Bits: 128
+  leftWallCheck: {fileID: 6717896161630799360}
+  rightWallCheck: {fileID: 7324848516063290816}
   wallCheckDistance: 0.1
   wallLayer:
     serializedVersion: 2
-    m_Bits: 0
-  maxHealth: 0
-  needlePrefab: {fileID: 0}
-  throwRechargeTime: 0
-  shootForce: 0
+    m_Bits: 128
+  maxHealth: 50
+  needlePrefab: {fileID: 877509961038081621, guid: 1c4e83e9cac284a7ebec766bc794eeb2, type: 3}
+  throwRechargeTime: 0.5
+  shootForce: 15
   hasNeedle: 0
 --- !u!1 &8410144517934041417
 GameObject:
@@ -276,7 +246,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6717896161630799360}
   m_Layer: 0
-  m_Name: RightWallCheck
+  m_Name: LeftWallCheck
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -289,6 +259,37 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8410144517934041417}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.5, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6411687457963703758}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &8625433426426583787
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7324848516063290816}
+  m_Layer: 0
+  m_Name: RightWallCheck
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7324848516063290816
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8625433426426583787}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0.5, y: 0, z: 0}
