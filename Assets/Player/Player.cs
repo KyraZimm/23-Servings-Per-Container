@@ -155,12 +155,11 @@ public class Player : MonoBehaviour
     /// </summary>
     private void ProcessWall()
     {
-        //isTouchingLeftWall = CheckIsTouchingWall();
         isTouchingLeftWall = Physics2D.Raycast(leftWallCheck.position, Vector2.left, wallCheckDistance, wallLayer);
         isTouchingRightWall = Physics2D.Raycast(rightWallCheck.position, Vector2.right, wallCheckDistance, wallLayer);
 
-        bool isHoldingIntoWall = (!isFacingLeft && moveDirection > 0) ||
-                                (isFacingLeft && moveDirection < 0);
+        bool isHoldingIntoWall = (isTouchingRightWall && moveDirection > 0) ||
+                                (isTouchingLeftWall && moveDirection < 0);
 
         if (isGrounded || (!isTouchingLeftWall && !isTouchingRightWall) || !isHoldingIntoWall || wallJumpTimer > 0)
         {
@@ -227,16 +226,6 @@ public class Player : MonoBehaviour
 
         return true;
     }
-
-    /*/// <summary>
-    /// Checks if player is touching a wall
-    /// </summary>
-    private bool CheckIsTouchingWall()
-    {
-        Vector2 wallCheckDir = currentFacing == FacingDir.Right ? Vector2.right : Vector2.left;
-        return Physics2D.Raycast(wallCheck.position, wallCheckDir, wallCheckDistance, wallLayer);
-    }*/
-
     /// <summary>
     /// Handles player movement with smooth acceleration and deceleration
     /// </summary>
